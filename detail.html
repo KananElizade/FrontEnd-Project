@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Show Details</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #111;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .details-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #1f1f1f;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+    h1 {
+      color: #e50914;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .info p {
+      margin: 5px 0;
+    }
+    .summary {
+      margin-top: 15px;
+      line-height: 1.5;
+    }
+    .back-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(145deg, #1f1f1f, #2a2a2a);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .back-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(229, 9, 20, 0.5);
+      background: linear-gradient(145deg, #e50914, #a2060e);
+    }
+  </style>
+</head>
+<body>
+  <div class="details-container" id="details">
+    <!-- Show details will appear here -->
+  </div>
+  <a href="index.html" class="back-btn">&larr; Back</a>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const show = JSON.parse(localStorage.getItem('selectedShow'));
+      const container = document.getElementById('details');
+
+      if (show) {
+        container.innerHTML = `
+          <h1>${show.name}</h1>
+          <div class="info">
+            <p><strong>Language:</strong> ${show.language}</p>
+            <p><strong>Rating:</strong> ${show.rating?.average || 'N/A'}</p>
+            <p><strong>Runtime:</strong> ${show.runtime || 'Unknown'} mins</p>
+          </div>
+          <div class="summary">${show.summary || 'No summary available.'}</div>
+        `;
+      } else {
+        container.innerHTML = '<p>Show data not found. Go back and select again.</p>';
+      }
+    });
+  </script>
+</body>
+</html>
