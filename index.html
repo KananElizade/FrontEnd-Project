@@ -72,7 +72,7 @@
       background-color: #e50914;
     }
     .main-content {
-      margin-left: 270px; /* Space for sidebar */
+      margin-left: 270px; 
       padding: 1rem;
     }
 
@@ -150,7 +150,6 @@
       transform: scale(1.05);
     }
 
-    /* Add animation for page load */
     @keyframes fadeInBody {
       from {
         opacity: 0;
@@ -333,8 +332,6 @@
       font-size: 1rem;
       color: #ccc;
     }
-
-    /* Modal Styling and Animation */
     .modal {
       display: none;
       position: fixed;
@@ -554,18 +551,11 @@
 
       async function fetchShows(page = 1) {
         try {
-          // Show the loading indicator
           document.getElementById('loading').style.display = 'block';
-          
-          // Wait for 1.5 seconds to simulate loading
           await new Promise(resolve => setTimeout(resolve, 1500));
-
-          // Fetch movies for the current page
           const response = await fetch(`https://api.tvmaze.com/shows?page=${page}`);
           const data = await response.json();
           shows = data;
-
-          // Hide the loading indicator
           document.getElementById('loading').style.display = 'none';
 
           renderShows();
@@ -586,15 +576,11 @@
           const matchesGenre = genre ? show.genres.includes(genre) : true;
           return matchesSearch && matchesGenre;
         });
-
-        // Apply sort by rating if toggled
         if (sortMode) {
           filtered = filtered.sort((a, b) => {
-            return b.rating.average - a.rating.average; // Sort by rating (5 to 1)
+            return b.rating.average - a.rating.average;
           });
         }
-
-        // Implement pagination
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
         const pageShows = filtered.slice(startIndex, endIndex);
@@ -651,11 +637,7 @@
 
       function renderPagination() {
         const totalPages = Math.ceil(shows.length / itemsPerPage);
-
-        // Clear existing pagination
         paginationContainer.innerHTML = '';
-
-        // Generate previous button
         if (currentPage > 1) {
           const prevBtn = document.createElement('li');
           prevBtn.classList.add('page-item');
@@ -666,8 +648,6 @@
           });
           paginationContainer.appendChild(prevBtn);
         }
-
-        // Generate page numbers
         for (let i = 1; i <= totalPages; i++) {
           const pageBtn = document.createElement('li');
           pageBtn.classList.add('page-item');
@@ -681,8 +661,6 @@
           });
           paginationContainer.appendChild(pageBtn);
         }
-
-        // Generate next button
         if (currentPage < totalPages) {
           const nextBtn = document.createElement('li');
           nextBtn.classList.add('page-item');
@@ -694,8 +672,6 @@
           paginationContainer.appendChild(nextBtn);
         }
       }
-
-      // Initialize
       fetchShows(currentPage);
 
       searchInput.addEventListener('input', () => {
@@ -707,16 +683,12 @@
         currentPage = 1;
         fetchShows(currentPage);
       });
-
-      // Sort by Rating
       const sortByRatingBtn = document.getElementById('sortByRatingBtn');
       sortByRatingBtn.addEventListener('click', () => {
         sortMode = true;
         currentPage = 1;
         fetchShows(currentPage);
       });
-
-      // Reset filters
       const resetBtn = document.getElementById('resetBtn');
       resetBtn.addEventListener('click', () => {
         searchInput.value = '';
@@ -724,7 +696,7 @@
         sortMode = false;
         currentPage = 1;
         fetchShows(currentPage);
-        window.location.href = 'index.html'; // Redirect to home page
+        window.location.href = 'index.html';
       });
     });
     
